@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <Title>Armut iterable.com Client Extension</Title>
+    <Authors>Armut Teknoloji A.Ş.</Authors>
+    <Owners>Armut Teknoloji A.Ş.</Owners>
+    <Description>armut iterable.com api .net client</Description>
+    <PackageProjectUrl>https://github.com/armutcom/iterable-client-dotnet</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/armutcom/iterable-client-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/armutcom/iterablecom-client-dotnet</RepositoryUrl>
+    <PackageIconUrl>https://armut.com/favicon.ico</PackageIconUrl>
+    <Company>Armut Teknoloji A.Ş.</Company>
+    <Copyright>Copyright 2018 © Armut Teknoloji A.Ş</Copyright>
+    <PackageTags>iterable, iterablecom, dotnet, dotnet core, client library,extension</PackageTags>
+    <AssemblyName>Armut.Iterable.Client.Extension</AssemblyName>
+    <RootNamespace>Armut.Iterable.Client.Extension</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http">
+      <Version>2.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>2.1.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);NETSTANDARD2</DefineConstants>
+  </PropertyGroup>
+</Project>
