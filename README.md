@@ -4,6 +4,8 @@ iterable-client-dotnet is a client library targeting .NET Standard 1.3, .NET Sta
 
 All API requests must be accompanied by a api key. You need to register then create an api key from [iterable.com Integrations](https://app.iterable.com/settings/apiKeys)
 
+Because of armut.com is already using iterable, armut.com will keep the Armut.Iterable.Client and Armut.Iterable.Client.Extension project up to date and maintain it.
+
 ## Supported Platforms
 
 * .NET 4.5 (Desktop / Server)
@@ -35,19 +37,22 @@ All API requests must be accompanied by a api key. You need to register then cre
 ## Installation
 
 |       | Package |
-|-------|----------|
+|---------------|----------|
 | iterable-client-dotnet | [![NuGet](https://img.shields.io/nuget/v/Armut.Iterable.Client.svg)](https://www.nuget.org/packages/Armut.Iterable.Client)    |
+| iterable-client-extension-dotnet | [![NuGet](https://img.shields.io/nuget/v/Armut.Iterable.Client.svg)](https://www.nuget.org/packages/Armut.Iterable.Client.Extension)    |
 
-Following commands can be used to install both Pekka.ClashRoyaleApi.Client and Pekka.RoyaleApi.Client, run the following command in the Package Manager Console
+Following commands can be used to install both Armut.Iterable.Client and Armut.Iterable.Client.Extension, run the following command in the Package Manager Console
 
 ```
 Install-Package Armut.Iterable.Client
+Install-Package Armut.Iterable.Client.Extension
 ```
 
 Or use `dotnet cli`
 
 ```
 dotnet Armut.Iterable.Client
+dotnet Armut.Iterable.Client.Extension
 ```
 
 ## Usage
@@ -106,10 +111,39 @@ var serviceProvider = services.BuildServiceProvider();
 var userClient = serviceProvider.GetRequiredService<IUserClient>();
 ```
 
-Register necessary dependencies to `ServiceCollection` as follows
+By referencing Armut.Iterable.Client.Extension, register necessary dependencies to `ServiceCollection` as follows
 ```csharp
 var serviceCollection = new ServiceCollection();
 serviceCollection.AddIterableClient("your_api_key");
+
+var serviceProvider = services.BuildServiceProvider();
+var userClient = serviceProvider.GetRequiredService<IUserClient>();
+```
+
+or
+```csharp
+var serviceCollection = new ServiceCollection();
+HttpClient iterableHttpClient = new HttpClient
+{
+    BaseAddress = new Uri("https://api.iterable.com/")
+};
+
+iterableHttpClient.DefaultRequestHeaders.Add("Api-Key", "your_api_key");
+
+serviceCollection.AddSingleton(clientFactory =>
+{
+    return (Func<string, HttpClient>)(key =>
+    {
+        switch (key)
+        {
+            case "IterableClient":
+                return iterableHttpClient;
+            default:
+                return null;
+        }
+    });
+});
+serviceCollection.AddIterableClient();
 
 var serviceProvider = services.BuildServiceProvider();
 var userClient = serviceProvider.GetRequiredService<IUserClient>();
