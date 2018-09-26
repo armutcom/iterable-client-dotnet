@@ -22,6 +22,7 @@ Because of armut.com is already using iterable, armut.com will keep the Armut.It
 | Build server                | Platform      | Build status                                                                                                                                                        | 
 |-----------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Travis                      | Linux / MacOS | [![Build Status](https://travis-ci.org/armutcom/iterable-client-dotnet.svg?branch=master)](https://travis-ci.org/armutcom/iterable-client-dotnet)  | |
+| Azure Pipelines             | Ubuntu        | [![Build status](https://dev.azure.com/armutcom/iterable-client-dotnet/_apis/build/status/iterable-client-dotnet%20-%20Ubuntu)](https://dev.azure.com/armutcom/iterable-client-dotnet/_build/latest?definitionId=3) | |
 
 ## Table of Contents
 
@@ -39,7 +40,7 @@ Because of armut.com is already using iterable, armut.com will keep the Armut.It
 |       | Package |
 |---------------|----------|
 | iterable-client-dotnet | [![NuGet](https://img.shields.io/nuget/v/Armut.Iterable.Client.svg)](https://www.nuget.org/packages/Armut.Iterable.Client)    |
-| iterable-client-extension-dotnet | [![NuGet](https://img.shields.io/nuget/v/Armut.Iterable.Client.svg)](https://www.nuget.org/packages/Armut.Iterable.Client.Extension)    |
+| iterable-client-extension-dotnet | [![NuGet](https://img.shields.io/nuget/v/Armut.Iterable.Client.Extension.svg)](https://www.nuget.org/packages/Armut.Iterable.Client.Extension)    |
 
 Following commands can be used to install both Armut.Iterable.Client and Armut.Iterable.Client.Extension, run the following command in the Package Manager Console
 
