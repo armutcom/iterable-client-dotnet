@@ -21,8 +21,10 @@ Because of armut.com is already using iterable, armut.com will keep the Armut.It
 
 | Build server                | Platform      | Build status                                                                                                                                                        | 
 |-----------------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Travis                      | Linux / MacOS | [![Build Status](https://travis-ci.org/armutcom/iterable-client-dotnet.svg?branch=master)](https://travis-ci.org/armutcom/iterable-client-dotnet)  | |
+| Travis                      | Linux         | [![Build Status](https://travis-ci.org/armutcom/iterable-client-dotnet.svg?branch=master)](https://travis-ci.org/armutcom/iterable-client-dotnet)  | |
 | Azure Pipelines             | Ubuntu        | [![Build status](https://dev.azure.com/armutcom/iterable-client-dotnet/_apis/build/status/iterable-client-dotnet%20-%20Ubuntu)](https://dev.azure.com/armutcom/iterable-client-dotnet/_build/latest?definitionId=3) | |
+| Azure Pipelines             | MacOs         | [![Build status](https://dev.azure.com/armutcom/iterable-client-dotnet/_apis/build/status/iterable-client-dotnet%20-%20MacOs)](https://dev.azure.com/armutcom/iterable-client-dotnet/_build/latest?definitionId=1) | |
+| Azure Pipelines             | Windows       | [![Build status](https://dev.azure.com/armutcom/iterable-client-dotnet/_apis/build/status/iterable-client-dotnet%20-%20Windows)](https://dev.azure.com/armutcom/iterable-client-dotnet/_build/latest?definitionId=2) | |
 
 ## Table of Contents
 
