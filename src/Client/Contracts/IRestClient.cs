@@ -8,6 +8,8 @@ namespace Armut.Iterable.Client.Contracts
 
         Task PostAsync<T>(string url, T request);
 
+        Task<T> PostAsync<T>(string url, object request);
+
         Task DeleteAsync(string url);
 
         Task DeleteAsync<T>(string url, T request);

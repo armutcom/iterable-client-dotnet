@@ -27,6 +27,20 @@ namespace Armut.Iterable.Client
             return JsonConvert.DeserializeObject<T>(content);
         }
 
+        public async Task<T> PostAsync<T>(string url, object request)
+        {
+            HttpRequestMessage requestMessage = new HttpRequestMessage
+            {
+                Content = request.Serialize(),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(url, UriKind.RelativeOrAbsolute)
+            };
+
+            HttpResponseMessage httpResponseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
+            string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<T>(content);
+        }
+
         public async Task PostAsync<T>(string url, T request)
         {
             HttpRequestMessage requestMessage = new HttpRequestMessage
