@@ -4,7 +4,7 @@ iterable-client-dotnet is a client library targeting .NET Standard 1.3, .NET Sta
 
 All API requests must be accompanied by a api key. You need to register then create an api key from [iterable.com Integrations](https://app.iterable.com/settings/apiKeys)
 
-Because of armut.com is already using iterable, armut.com will keep the Armut.Iterable.Client and Armut.Iterable.Client.Extension project up to date and maintain it.
+Because of armut.com is already using iterable, armut.com will keep this client library up to date and maintain it.
 
 ## Supported Platforms
 
@@ -158,14 +158,6 @@ The methods that end with Async returns model itself without additional HTTP res
 
 ```csharp
 UserModel userModel = await userClient.GetByEmailAsync("info@armut.com");
-```
-
-### Synchronous Wrapper
-
-For synchronous calls, .NET Framework's .GetAwaiter().GetResult() method can be called.
-
-```csharp
-UserModel userModel = userClient.GetByEmailAsync("info@armut.com").GetAwaiter().GetResult();
 ```
 
 ### Samples
