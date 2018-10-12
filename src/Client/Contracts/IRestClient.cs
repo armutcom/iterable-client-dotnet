@@ -4,12 +4,12 @@ namespace Armut.Iterable.Client.Contracts
 {
     public interface IRestClient
     {
-        Task<T> GetAsync<T>(string url);
+        Task<T> GetAsync<T>(string path);
 
-        Task PostAsync<T>(string url, T request);
+        Task<T> PostAsync<T>(string path, object request);
 
-        Task DeleteAsync(string url);
+        Task<T> DeleteAsync<T>(string path);
 
-        Task DeleteAsync<T>(string url, T request);
+        Task<T> DeleteAsync<T>(string path, object request);
     }
 }
