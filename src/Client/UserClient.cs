@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
-using Armut.Iterable.Client.Contracts;
+﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.UserModels;
+using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client
 {
@@ -20,8 +21,8 @@ namespace Armut.Iterable.Client
 
         public async Task<UserModel> GetByEmailAsync(string email)
         {
-            RetrieveUserModel user = await _client.GetAsync<RetrieveUserModel>($"/api/users/{email}").ConfigureAwait(false);
-            return user?.User;
+            ApiResponse<RetrieveUserModel> response = await _client.GetAsync<RetrieveUserModel>($"/api/users/{email}").ConfigureAwait(false);
+            return response?.Model.User;
         }
 
         public async Task BulkUpdateAsync(BulkUpadateUserModel model)
@@ -31,8 +32,8 @@ namespace Armut.Iterable.Client
 
         public async Task<UserModel> GetByUserIdAsync(string userId)
         {
-            RetrieveUserModel user = await _client.GetAsync<RetrieveUserModel>($"/api/users/byUserId/{userId}").ConfigureAwait(false);
-            return user?.User;
+            ApiResponse<RetrieveUserModel> user = await _client.GetAsync<RetrieveUserModel>($"/api/users/byUserId/{userId}").ConfigureAwait(false);
+            return user?.Model.User;
         }
 
         public async Task DeleteByUserIdAsync(string userId)

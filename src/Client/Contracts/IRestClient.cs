@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Armut.Iterable.Client.Core.Responses;
+using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client.Contracts
 {
     public interface IRestClient
     {
-        Task<T> GetAsync<T>(string path);
+        Task<ApiResponse<T>> GetAsync<T>(string path) where T : class, new();
 
-        Task<T> PostAsync<T>(string path, object request);
+        Task<ApiResponse<T>> PostAsync<T>(string path, object request) where T : class, new();
 
-        Task<T> DeleteAsync<T>(string path);
+        Task<ApiResponse<T>> DeleteAsync<T>(string path) where T : class, new();
 
-        Task<T> DeleteAsync<T>(string path, object request);
+        Task<ApiResponse<T>> DeleteAsync<T>(string path, object request) where T : class, new();
     }
 }

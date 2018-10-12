@@ -1,8 +1,10 @@
+using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core.Responses;
+using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Armut.Iterable.Client.Contracts;
-using Newtonsoft.Json;
 
 namespace Armut.Iterable.Client.Core
 {
@@ -20,22 +22,25 @@ namespace Armut.Iterable.Client.Core
             _client = client;
         }
 
-        public async Task<T> GetAsync<T>(string path)
+        public async Task<ApiResponse<T>> GetAsync<T>(string path) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
             HttpResponseMessage httpResponseMessage = await _client.GetAsync(path).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(content))
+            var apiResponse = new ApiResponse<T>
             {
-                return default(T);
-            }
+                HttpStatusCode = httpResponseMessage.StatusCode,
+                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                UrlPath = path,
+                Model = JsonConvert.DeserializeObject<T>(content)
+            };
 
-            return JsonConvert.DeserializeObject<T>(content);
+            return apiResponse;
         }
 
-        public async Task<T> PostAsync<T>(string path, object request)
+        public async Task<ApiResponse<T>> PostAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
@@ -49,15 +54,18 @@ namespace Armut.Iterable.Client.Core
             HttpResponseMessage httpResponseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(content))
+            var apiResponse = new ApiResponse<T>
             {
-                return default(T);
-            }
+                HttpStatusCode = httpResponseMessage.StatusCode,
+                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                UrlPath = path,
+                Model = JsonConvert.DeserializeObject<T>(content)
+            };
 
-            return JsonConvert.DeserializeObject<T>(content);
+            return apiResponse;
         }
 
-        public async Task<T> DeleteAsync<T>(string path)
+        public async Task<ApiResponse<T>> DeleteAsync<T>(string path) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
@@ -66,19 +74,22 @@ namespace Armut.Iterable.Client.Core
                 Method = HttpMethod.Delete,
                 RequestUri = new Uri(path, UriKind.RelativeOrAbsolute)
             };
-            
+
             HttpResponseMessage httpResponseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(content))
+            var apiResponse = new ApiResponse<T>
             {
-                return default(T);
-            }
+                HttpStatusCode = httpResponseMessage.StatusCode,
+                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                UrlPath = path,
+                Model = JsonConvert.DeserializeObject<T>(content)
+            };
 
-            return JsonConvert.DeserializeObject<T>(content);
+            return apiResponse;
         }
 
-        public async Task<T> DeleteAsync<T>(string path, object request)
+        public async Task<ApiResponse<T>> DeleteAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
@@ -92,12 +103,15 @@ namespace Armut.Iterable.Client.Core
             HttpResponseMessage httpResponseMessage = await _client.SendAsync(requestMessage).ConfigureAwait(false);
             string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(content))
+            var apiResponse = new ApiResponse<T>
             {
-                return default(T);
-            }
+                HttpStatusCode = httpResponseMessage.StatusCode,
+                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                UrlPath = path,
+                Model = JsonConvert.DeserializeObject<T>(content)
+            };
 
-            return JsonConvert.DeserializeObject<T>(content);
+            return apiResponse;
         }
     }
 }
