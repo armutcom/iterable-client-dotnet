@@ -12,7 +12,7 @@ namespace Sample.Client.Standalone
             IIterableFactory iterableFactory = IterableStandalone.Create("your_api_key");
             UserClient client = iterableFactory.CreateUserClient();
 
-            await client.UpdateAsync(new UpdateUserModel
+            await client.UpdateAsync(new UpdateUserRequest
             {
                 Email = "aksel@armut.com",
                 UserId = "aksel@armut.com",

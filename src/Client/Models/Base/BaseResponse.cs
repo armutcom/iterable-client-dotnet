@@ -1,4 +1,4 @@
-﻿namespace Armut.Iterable.Client.Models.UserModels
+﻿namespace Armut.Iterable.Client.Models.Base
 {
     public abstract class BaseResponse
     {

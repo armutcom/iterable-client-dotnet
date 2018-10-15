@@ -1,6 +1,6 @@
 namespace Armut.Iterable.Client.Models.UserModels
 {
-    public class BulkUpadateUserModel
+    public class BulkUpadateUserRequest
     {
         public UserModel[] Users { get; set; }
     }

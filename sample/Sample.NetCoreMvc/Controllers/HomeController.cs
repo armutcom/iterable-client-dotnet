@@ -16,7 +16,7 @@ namespace Sample.NetCoreMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _client.UpdateAsync(new UpdateUserModel
+            await _client.UpdateAsync(new UpdateUserRequest
             {
                 Email = "aksel@armut.com",
                 UserId = "aksel@armut.com",
