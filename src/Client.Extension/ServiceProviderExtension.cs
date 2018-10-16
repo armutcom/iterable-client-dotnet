@@ -1,4 +1,5 @@
 ﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core;
 using Microsoft.Extensions.DependencyInjection;
 #if NETSTANDARD2
 using System;
