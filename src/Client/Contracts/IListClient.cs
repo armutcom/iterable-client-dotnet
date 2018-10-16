@@ -1,23 +1,23 @@
-﻿using Armut.Iterable.Client.Models.ListModels;
-using System.Collections.Generic;
+﻿using Armut.Iterable.Client.Core.Responses;
+using Armut.Iterable.Client.Models.ListModels;
 using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client.Contracts
 {
     public interface IListClient
     {
-        Task<GetAllListResponse> GetAllListsAsync();
-        
-        Task<IEnumerable<string>> GetUsersAsync(int listId);
+        Task<ApiResponse<GetAllListResponse>> GetAllListsAsync();
 
-        Task<long> GetSizeAsync(int listId);
+        Task<ApiResponse<GetUsersResponse>> GetUsersAsync(int listId);
 
-        Task<int> CreateAsync(string name);
+        Task<ApiResponse<object>> GetSizeAsync(int listId);
 
-        Task DeleteAsync(int listId);
+        Task<ApiResponse<CreateListResponse>> CreateAsync(string name);
 
-        Task<SubscribeResponse> SubscribeAsync(SubscribeRequest model);
+        Task<ApiResponse<DeleteListResponse>> DeleteAsync(int listId);
 
-        Task<UnsubscribeResponse> UnsubscribeAsync(UnsubscribeRequest model);
+        Task<ApiResponse<SubscribeResponse>> SubscribeAsync(SubscribeRequest model);
+
+        Task<ApiResponse<UnsubscribeResponse>> UnsubscribeAsync(UnsubscribeRequest model);
     }
 }

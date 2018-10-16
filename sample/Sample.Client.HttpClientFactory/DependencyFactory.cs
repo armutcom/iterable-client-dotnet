@@ -1,5 +1,6 @@
 ﻿using Armut.Iterable.Client;
 using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

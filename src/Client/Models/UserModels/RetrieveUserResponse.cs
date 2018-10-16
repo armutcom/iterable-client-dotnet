@@ -1,6 +1,6 @@
 namespace Armut.Iterable.Client.Models.UserModels
 {
-    internal class RetrieveUserModel
+    public class RetrieveUserResponse
     {
         public UserModel User { get; set; }
     }

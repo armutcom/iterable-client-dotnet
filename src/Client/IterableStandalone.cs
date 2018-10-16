@@ -1,4 +1,5 @@
 ﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core;
 using System;
 using System.Net.Http;
 
@@ -27,6 +28,11 @@ namespace Armut.Iterable.Client
         public UserClient CreateUserClient()
         {
             return new UserClient(_restClient);
+        }
+
+        public ListClient CreateListClient()
+        {
+            return new ListClient(_restClient);
         }
     }
 }

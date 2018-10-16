@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Armut.Iterable.Client.Contracts;
+﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.ListModels;
+using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client
 {
@@ -14,37 +14,39 @@ namespace Armut.Iterable.Client
             _client = client;
         }
 
-        public async Task<int> CreateAsync(string name)
+        public async Task<ApiResponse<CreateListResponse>> CreateAsync(string name)
         {
-            return await _client.PostAsync<int>("/api/lists", name).ConfigureAwait(false);
+            return await _client.PostAsync<CreateListResponse>("/api/lists", name).ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(int listId)
+        public async Task<ApiResponse<DeleteListResponse>> DeleteAsync(int listId)
         {
-            await _client.DeleteAsync($"/api/lists/{listId}").ConfigureAwait(false);
+            return await _client.DeleteAsync<DeleteListResponse>($"/api/lists/{listId}").ConfigureAwait(false);
         }
 
-        public async Task<GetAllListResponse> GetAllListsAsync()
+        public async Task<ApiResponse<GetAllListResponse>> GetAllListsAsync()
         {
             return await _client.GetAsync<GetAllListResponse>("/api/lists").ConfigureAwait(false);
         }
 
-        public async Task<long> GetSizeAsync(int listId)
+        public async Task<ApiResponse<object>> GetSizeAsync(int listId)
         {
-            return await _client.GetAsync<long>($"/api/lists/{listId}/size").ConfigureAwait(false);
+            return await _client.GetAsync<object>($"/api/lists/{listId}/size").ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<string>> GetUsersAsync(int listId)
+        public async Task<ApiResponse<GetUsersResponse>> GetUsersAsync(int listId)
         {
-            return await _client.GetAsync<IEnumerable<string>>($"/api/lists/getUsers?listId={listId}").ConfigureAwait(false);
+            //var response = await _client.GetAsync<string>($"/api/lists/getUsers?listId={listId}").ConfigureAwait(false);
+
+            throw new System.NotImplementedException();
         }
 
-        public async Task<SubscribeResponse> SubscribeAsync(SubscribeRequest model)
+        public async Task<ApiResponse<SubscribeResponse>> SubscribeAsync(SubscribeRequest model)
         {
             return await _client.PostAsync<SubscribeResponse>("/api/lists/subscribe", model).ConfigureAwait(false);
         }
 
-        public async Task<UnsubscribeResponse> UnsubscribeAsync(UnsubscribeRequest model)
+        public async Task<ApiResponse<UnsubscribeResponse>> UnsubscribeAsync(UnsubscribeRequest model)
         {
             return await _client.PostAsync<UnsubscribeResponse>("/api/lists/unsubscribe", model).ConfigureAwait(false);
         }
