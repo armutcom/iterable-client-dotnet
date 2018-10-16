@@ -62,6 +62,7 @@ namespace Armut.Iterable.Client.Core
         public async Task<ApiResponse<T>> PostAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             HttpRequestMessage requestMessage = new HttpRequestMessage
             {
@@ -111,6 +112,7 @@ namespace Armut.Iterable.Client.Core
         public async Task<ApiResponse<T>> DeleteAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             HttpRequestMessage requestMessage = new HttpRequestMessage
             {
