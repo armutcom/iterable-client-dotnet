@@ -2,8 +2,7 @@
 
 namespace Armut.Iterable.Client.Models.UserModels
 {
-    public class DisableDeviceModel : BaseUserModel
+    public class UpdateUserResponse : BaseResponse
     {
-        public string Token { get; set; }
     }
 }

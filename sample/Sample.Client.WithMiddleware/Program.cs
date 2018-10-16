@@ -12,7 +12,7 @@ namespace Sample.Client.WithMiddleware
             IRestClient restClient = DependencyFactory.Instance.Resolve<IRestClient>();
             IUserClient client = DependencyFactory.Instance.Resolve<IUserClient>();
 
-            await client.UpdateAsync(new UpdateUserModel
+            await client.UpdateAsync(new UpdateUserRequest
             {
                 Email = "aksel@armut.com",
                 UserId = "aksel@armut.com",

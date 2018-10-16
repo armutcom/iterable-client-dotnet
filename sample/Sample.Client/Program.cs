@@ -12,7 +12,9 @@ namespace Sample.Client.DependencyInjection
             IRestClient restClient = DependencyFactory.Instance.Resolve<IRestClient>();
             IUserClient client = DependencyFactory.Instance.Resolve<IUserClient>();
             
-            await client.UpdateAsync(new UpdateUserModel
+            var result = await client.GetByEmailAsync("aksel@armut.com");
+
+            await client.UpdateAsync(new UpdateUserRequest
             {
                 Email = "aksel@armut.com",
                 UserId = "aksel@armut.com",

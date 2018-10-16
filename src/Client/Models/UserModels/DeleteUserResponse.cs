@@ -2,8 +2,7 @@
 
 namespace Armut.Iterable.Client.Models.UserModels
 {
-    public class RegisterBrowserTokenModel : BaseUserModel
+    public class DeleteUserResponse : BaseResponse
     {
-        public string BrowserToken { get; set; }
     }
 }

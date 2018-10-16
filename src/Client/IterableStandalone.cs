@@ -1,4 +1,5 @@
 ﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core;
 using System;
 using System.Net.Http;
 

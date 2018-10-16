@@ -13,7 +13,7 @@ namespace Sample.Client.MiddlewareHttpClientFactory
 
             var result = await client.GetByEmailAsync("aksel@armut.com");
 
-            Console.WriteLine(result.UserId);
+            Console.WriteLine(result?.Model?.User?.UserId);
         }
     }
 }

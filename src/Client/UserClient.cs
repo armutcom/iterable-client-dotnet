@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
-using Armut.Iterable.Client.Contracts;
+﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core.Responses;
+using Armut.Iterable.Client.Models.BrowserModels;
+using Armut.Iterable.Client.Models.DeviceModels;
 using Armut.Iterable.Client.Models.UserModels;
+using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client
 {
@@ -13,56 +16,54 @@ namespace Armut.Iterable.Client
             _client = client;
         }
 
-        public async Task DeleteByEmailAsync(string email)
+        public async Task<ApiResponse<DeleteUserResponse>> DeleteByEmailAsync(string email)
         {
-            await _client.DeleteAsync($"/api/users/{email}").ConfigureAwait(false);
+            return await _client.DeleteAsync<DeleteUserResponse>($"/api/users/{email}").ConfigureAwait(false);
         }
 
-        public async Task<UserModel> GetByEmailAsync(string email)
+        public async Task<ApiResponse<RetrieveUserResponse>> GetByEmailAsync(string email)
         {
-            RetrieveUserModel user = await _client.GetAsync<RetrieveUserModel>($"/api/users/{email}").ConfigureAwait(false);
-            return user?.User;
+            return await _client.GetAsync<RetrieveUserResponse>($"/api/users/{email}").ConfigureAwait(false);
         }
 
-        public async Task BulkUpdateAsync(BulkUpadateUserModel model)
+        public async Task<ApiResponse<BulkUpdateUserResponse>> BulkUpdateAsync(BulkUpadateUserRequest model)
         {
-            await _client.PostAsync("/api/users/bulkUpdate", model.Users).ConfigureAwait(false);
+            return await _client.PostAsync<BulkUpdateUserResponse>("/api/users/bulkUpdate", model.Users).ConfigureAwait(false);
         }
 
-        public async Task<UserModel> GetByUserIdAsync(string userId)
+        public async Task<ApiResponse<RetrieveUserResponse>> GetByUserIdAsync(string userId)
         {
-            RetrieveUserModel user = await _client.GetAsync<RetrieveUserModel>($"/api/users/byUserId/{userId}").ConfigureAwait(false);
-            return user?.User;
+            return await _client.GetAsync<RetrieveUserResponse>($"/api/users/byUserId/{userId}").ConfigureAwait(false);
         }
 
-        public async Task DeleteByUserIdAsync(string userId)
+        public async Task<ApiResponse<DeleteUserResponse>> DeleteByUserIdAsync(string userId)
         {
-            await _client.DeleteAsync($"/api/users/byUserId/{userId}").ConfigureAwait(false);
+            return await _client.DeleteAsync<DeleteUserResponse>($"/api/users/byUserId/{userId}").ConfigureAwait(false);
         }
 
-        public async Task DisableDeviceAsync(DisableDeviceModel model)
+        public async Task<ApiResponse<DisableDeviceResponse>> DisableDeviceAsync(DisableDeviceRequest model)
         {
-            await _client.PostAsync("/api/users/disableDevice", model).ConfigureAwait(false);
+            return await _client.PostAsync<DisableDeviceResponse>("/api/users/disableDevice", model).ConfigureAwait(false);
         }
 
-        public async Task RegisterBrowserTokenAsync(RegisterBrowserTokenModel model)
+        public async Task<ApiResponse<RegisterBrowserTokenResponse>> RegisterBrowserTokenAsync(RegisterBrowserTokenRequest model)
         {
-            await _client.PostAsync("/api/users/registerBrowserToken", model).ConfigureAwait(false);
+            return await _client.PostAsync<RegisterBrowserTokenResponse>("/api/users/registerBrowserToken", model).ConfigureAwait(false);
         }
 
-        public async Task RegisterDeviceTokenAsync(RegisterDeviceTokenModel model)
+        public async Task<ApiResponse<RegisterDeviceTokenResponse>> RegisterDeviceTokenAsync(RegisterDeviceTokenRequest model)
         {
-            await _client.PostAsync("/api/users/registerDeviceToken", model).ConfigureAwait(false);
+            return await _client.PostAsync<RegisterDeviceTokenResponse>("/api/users/registerDeviceToken", model).ConfigureAwait(false);
         }
 
-        public async Task UpdateAsync(UpdateUserModel model)
+        public async Task<ApiResponse<UpdateUserResponse>> UpdateAsync(UpdateUserRequest model)
         {
-            await _client.PostAsync("/api/users/update", model).ConfigureAwait(false);
+            return await _client.PostAsync<UpdateUserResponse>("/api/users/update", model).ConfigureAwait(false);
         }
 
-        public async Task UpdateEmailAsync(UpdateEmailModel model)
+        public async Task<ApiResponse<UpdateUserResponse>> UpdateEmailAsync(UpdateEmailRequest model)
         {
-            await _client.PostAsync("/api/users/updateEmail", model).ConfigureAwait(false);
+            return await _client.PostAsync<UpdateUserResponse>("/api/users/updateEmail", model).ConfigureAwait(false);
         }
     }
 }
