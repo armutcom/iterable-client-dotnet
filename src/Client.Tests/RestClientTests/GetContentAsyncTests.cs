@@ -37,6 +37,7 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
             Assert.NotNull(apiResponse);
             Assert.Equal(HttpStatusCode.Created, apiResponse.HttpStatusCode);
             Assert.Equal(0, apiResponse.Headers.Count);
+            Assert.Equal(path, apiResponse.UrlPath);
             Assert.Equal(content, apiResponse.Content);
         }
     }
