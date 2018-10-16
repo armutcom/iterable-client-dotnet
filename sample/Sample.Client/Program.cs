@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Armut.Iterable.Client.Contracts;
 using Armut.Iterable.Client.Models.UserModels;
 
@@ -9,20 +10,12 @@ namespace Sample.Client.DependencyInjection
         public static async Task Main(string[] args)
         {
             DependencyFactory.Instance.RegisterDependencies();
-            IRestClient restClient = DependencyFactory.Instance.Resolve<IRestClient>();
-            IUserClient client = DependencyFactory.Instance.Resolve<IUserClient>();
+            IListClient client = DependencyFactory.Instance.Resolve<IListClient>();
             
-            await client.UpdateAsync(new UpdateUserModel
-            {
-                Email = "aksel@armut.com",
-                UserId = "aksel@armut.com",
-                DataFields = new
-                {
-                    Name = "aksel"
-                }
-            });
+            var response = await client.GetUsersAsync(93798);
 
-            await client.DeleteByEmailAsync("aksel@armut.com");
+
+            Console.ReadLine();
         }
     }
 }
