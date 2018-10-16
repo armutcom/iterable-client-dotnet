@@ -28,6 +28,7 @@ namespace Sample.Client.DependencyInjection
             serviceCollection
                 .AddSingleton<IRestClient, RestClient>()
                 .AddTransient<IUserClient, UserClient>()
+                .AddTransient<IListClient,ListClient>()
                 //.AddSingleton(iterableHttpClient)
                 .AddSingleton(clientFactory =>
                 {

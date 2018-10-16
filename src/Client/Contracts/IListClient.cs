@@ -10,7 +10,7 @@ namespace Armut.Iterable.Client.Contracts
 
         Task<ApiResponse<GetUsersResponse>> GetUsersAsync(int listId);
 
-        Task<ApiResponse<object>> GetSizeAsync(int listId);
+        Task<ApiResponse<GetSizeResponse>> GetSizeAsync(int listId);
 
         Task<ApiResponse<CreateListResponse>> CreateAsync(string name);
 

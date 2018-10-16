@@ -16,7 +16,7 @@ namespace Armut.Iterable.Client.Core.Responses
 
         public string UrlPath { get; set; }
 
-        public string Message { get; set; }
+        public string Content { get; set; }
 
         public bool Error { get; set; }
     }

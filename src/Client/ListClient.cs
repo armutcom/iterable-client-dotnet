@@ -1,6 +1,7 @@
 ﻿using Armut.Iterable.Client.Contracts;
 using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.ListModels;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Armut.Iterable.Client
@@ -29,16 +30,53 @@ namespace Armut.Iterable.Client
             return await _client.GetAsync<GetAllListResponse>("/api/lists").ConfigureAwait(false);
         }
 
-        public async Task<ApiResponse<object>> GetSizeAsync(int listId)
+        public async Task<ApiResponse<GetSizeResponse>> GetSizeAsync(int listId)
         {
-            return await _client.GetAsync<object>($"/api/lists/{listId}/size").ConfigureAwait(false);
+            ApiResponse apiResponse = await _client.GetContentAsync($"/api/lists/{listId}/size").ConfigureAwait(false);
+
+            var response = new ApiResponse<GetSizeResponse>
+            {
+                HttpStatusCode = apiResponse.HttpStatusCode,
+                Headers = apiResponse.Headers,
+                UrlPath = apiResponse.UrlPath
+            };
+
+            if (apiResponse.HttpStatusCode != HttpStatusCode.BadRequest
+                && apiResponse.HttpStatusCode != HttpStatusCode.Unauthorized
+                && !string.IsNullOrEmpty(apiResponse.Content)
+                && long.TryParse(apiResponse.Content, out long size))
+            {
+                response.Model = new GetSizeResponse
+                {
+                    Size = size
+                };
+            }
+
+            return response;
         }
 
         public async Task<ApiResponse<GetUsersResponse>> GetUsersAsync(int listId)
         {
-            //var response = await _client.GetAsync<string>($"/api/lists/getUsers?listId={listId}").ConfigureAwait(false);
+            ApiResponse apiResponse = await _client.GetContentAsync($"/api/lists/getUsers?listId={listId}").ConfigureAwait(false);
 
-            throw new System.NotImplementedException();
+            var response = new ApiResponse<GetUsersResponse>
+            {
+                HttpStatusCode = apiResponse.HttpStatusCode,
+                Headers = apiResponse.Headers,
+                UrlPath = apiResponse.UrlPath
+            };
+
+            if (apiResponse.HttpStatusCode != HttpStatusCode.BadRequest
+                && apiResponse.HttpStatusCode != HttpStatusCode.Unauthorized
+                && !string.IsNullOrEmpty(apiResponse.Content))
+            {
+                response.Model = new GetUsersResponse
+                {
+                    UserIds = apiResponse.Content.Split('\n')
+                };
+            }
+
+            return response;
         }
 
         public async Task<ApiResponse<SubscribeResponse>> SubscribeAsync(SubscribeRequest model)

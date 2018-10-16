@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Armut.Iterable.Client.Contracts;
+using System;
 using System.Threading.Tasks;
-using Armut.Iterable.Client.Contracts;
-using Armut.Iterable.Client.Models.UserModels;
 
 namespace Sample.Client.DependencyInjection
 {
@@ -11,9 +10,8 @@ namespace Sample.Client.DependencyInjection
         {
             DependencyFactory.Instance.RegisterDependencies();
             IListClient client = DependencyFactory.Instance.Resolve<IListClient>();
-            
-            var response = await client.GetUsersAsync(93798);
 
+            var response = await client.GetSizeAsync(93798);
 
             Console.ReadLine();
         }
