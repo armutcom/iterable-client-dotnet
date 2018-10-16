@@ -2,6 +2,7 @@
 using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.UserModels;
 using Armut.Iterable.Client.Tests.Base;
+using Moq;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -13,7 +14,7 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
     public class GetAsyncTests : BaseTestClass
     {
         [Fact]
-        public async Task Should_Throw_Should_Throw_ArgumentException_If_Path_Is_Null_Or_Empty()
+        public async Task Should_Throw_ArgumentException_If_Path_Is_Null_Or_Empty()
         {
             IRestClient _restClient = CreateRestClient();
 
@@ -43,6 +44,8 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
             Assert.IsType<UpdateUserResponse>(apiResponse.Model);
             Assert.Equal("test message", apiResponse.Model.Msg);
             Assert.Equal("Success", apiResponse.Model.Code);
+
+            VerifyRestClient(Times.Once(), HttpMethod.Get, path);
         }
     }
 }

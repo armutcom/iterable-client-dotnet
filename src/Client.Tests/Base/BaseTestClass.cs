@@ -11,6 +11,8 @@ namespace Armut.Iterable.Client.Tests.Base
 {
     public class BaseTestClass
     {
+        public Mock<IRestClient> MockRestClient { get; } = new Mock<IRestClient>();
+
         public Mock<HttpMessageHandler> MockHttpMessageHandler { get; set; }
 
         public IRestClient CreateRestClient()
@@ -42,6 +44,24 @@ namespace Armut.Iterable.Client.Tests.Base
             };
 
             return new RestClient(httpClient);
+        }
+
+        public void VerifyRestClient(Times times, HttpMethod method)
+        {
+            MockHttpMessageHandler
+                .Protected()
+                .Verify("SendAsync", times,
+                    ItExpr.Is<HttpRequestMessage>(message => message.Method == method),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+        
+        public void VerifyRestClient(Times times, HttpMethod method, string path)
+        {
+            MockHttpMessageHandler
+                .Protected()
+                .Verify("SendAsync", times,
+                    ItExpr.Is<HttpRequestMessage>(message => message.Method == method && message.RequestUri.ToString().Contains(path)),
+                    ItExpr.IsAny<CancellationToken>());
         }
     }
 }

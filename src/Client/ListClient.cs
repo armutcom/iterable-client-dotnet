@@ -1,4 +1,5 @@
 ﻿using Armut.Iterable.Client.Contracts;
+using Armut.Iterable.Client.Core;
 using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.ListModels;
 using System.Net;
@@ -17,11 +18,15 @@ namespace Armut.Iterable.Client
 
         public async Task<ApiResponse<CreateListResponse>> CreateAsync(string name)
         {
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
             return await _client.PostAsync<CreateListResponse>("/api/lists", name).ConfigureAwait(false);
         }
 
         public async Task<ApiResponse<DeleteListResponse>> DeleteAsync(int listId)
         {
+            Ensure.GreaterThanZero(listId, nameof(listId));
+
             return await _client.DeleteAsync<DeleteListResponse>($"/api/lists/{listId}").ConfigureAwait(false);
         }
 
@@ -32,6 +37,8 @@ namespace Armut.Iterable.Client
 
         public async Task<ApiResponse<GetSizeResponse>> GetSizeAsync(int listId)
         {
+            Ensure.GreaterThanZero(listId, nameof(listId));
+
             ApiResponse apiResponse = await _client.GetContentAsync($"/api/lists/{listId}/size").ConfigureAwait(false);
 
             var response = new ApiResponse<GetSizeResponse>
@@ -57,6 +64,8 @@ namespace Armut.Iterable.Client
 
         public async Task<ApiResponse<GetUsersResponse>> GetUsersAsync(int listId)
         {
+            Ensure.GreaterThanZero(listId, nameof(listId));
+
             ApiResponse apiResponse = await _client.GetContentAsync($"/api/lists/getUsers?listId={listId}").ConfigureAwait(false);
 
             var response = new ApiResponse<GetUsersResponse>
@@ -81,11 +90,15 @@ namespace Armut.Iterable.Client
 
         public async Task<ApiResponse<SubscribeResponse>> SubscribeAsync(SubscribeRequest model)
         {
+            Ensure.ArgumentNotNull(model, nameof(model));
+
             return await _client.PostAsync<SubscribeResponse>("/api/lists/subscribe", model).ConfigureAwait(false);
         }
 
         public async Task<ApiResponse<UnsubscribeResponse>> UnsubscribeAsync(UnsubscribeRequest model)
         {
+            Ensure.ArgumentNotNull(model, nameof(model));
+
             return await _client.PostAsync<UnsubscribeResponse>("/api/lists/unsubscribe", model).ConfigureAwait(false);
         }
     }

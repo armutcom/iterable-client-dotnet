@@ -2,6 +2,7 @@
 using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.UserModels;
 using Armut.Iterable.Client.Tests.Base;
+using Moq;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -22,7 +23,7 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
         }
 
         [Fact]
-        public async Task Should_Throw_Should_Throw_ArgumentException_If_Request_Is_Null_Or_Empty()
+        public async Task Should_Throw_ArgumentException_If_Request_Is_Null_Or_Empty()
         {
             const string path = "/api/users/delete";
             IRestClient _restClient = CreateRestClient();
@@ -52,6 +53,8 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
             Assert.IsType<DeleteUserResponse>(apiResponse.Model);
             Assert.Equal("test message", apiResponse.Model.Msg);
             Assert.Equal("Success", apiResponse.Model.Code);
+
+            VerifyRestClient(Times.Once(), HttpMethod.Delete, path);
         }
     }
 }
