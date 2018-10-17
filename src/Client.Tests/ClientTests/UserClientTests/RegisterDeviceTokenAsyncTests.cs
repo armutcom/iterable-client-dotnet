@@ -20,7 +20,7 @@ namespace Armut.Iterable.Client.Tests.ClientTests.UserClientTests
         }
 
         [Fact]
-        public async Task Should_Throw_Should_Throw_ArgumentException_If_Path_Is_Null_Or_Empty()
+        public async Task Should_Throw_Should_Throw_ArgumentException_If_Request_Is_Null()
         {
             await Assert.ThrowsAsync<ArgumentNullException>(() => _userClient.RegisterDeviceTokenAsync(null)).ConfigureAwait(false);
         }
