@@ -165,7 +165,7 @@ UserModel userModel = await userClient.GetByEmailAsync("info@armut.com");
 For synchronous calls, .NET Framework's .GetAwaiter().GetResult() method can be called.
 
 ```csharp
-UserModel userModel = userClient.GetByEmailAsync("info@armut.com").GetAwaiter().GetResult();
+var userModel = userClient.GetByEmailAsync("info@armut.com").GetAwaiter().GetResult();
 ```
 
 ### Samples
