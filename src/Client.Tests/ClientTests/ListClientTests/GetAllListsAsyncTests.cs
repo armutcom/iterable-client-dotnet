@@ -22,7 +22,7 @@ namespace Armut.Iterable.Client.Tests.ClientTests.ListClientTests
         }
 
         [Fact]
-        public async Task Should_Delete_User()
+        public async Task Should_Retrieve_All_Lists()
         {
             const string path = "/api/lists";
             const int listId = 14;

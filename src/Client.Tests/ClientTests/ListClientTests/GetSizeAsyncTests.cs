@@ -10,11 +10,11 @@ using Xunit;
 
 namespace Armut.Iterable.Client.Tests.ClientTests.ListClientTests
 {
-    public class DeleteAsyncTests : BaseTestClass
+    public class GetSizeAsyncTests : BaseTestClass
     {
         private readonly IListClient _listClient;
 
-        public DeleteAsyncTests()
+        public GetSizeAsyncTests()
         {
             _listClient = new ListClient(MockRestClient.Object);
         }
@@ -27,30 +27,28 @@ namespace Armut.Iterable.Client.Tests.ClientTests.ListClientTests
         }
 
         [Fact]
-        public async Task Should_Delete()
+        public async Task Should_Retrieve_Size()
         {
             const int listId = 14;
-            string path = $"/api/lists/{listId}";
+            const int size = 309;
+            string path = $"/api/lists/{listId}/size";
 
-            MockRestClient.Setup(m => m.DeleteAsync<DeleteListResponse>(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse<DeleteListResponse>
+            MockRestClient.Setup(m => m.GetContentAsync(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse
             {
                 UrlPath = path,
                 HttpStatusCode = HttpStatusCode.OK,
-                Model = new DeleteListResponse
-                {
-                    Code = "Success"
-                }
+                Content = size.ToString()
             });
 
-            ApiResponse<DeleteListResponse> response = await _listClient.DeleteAsync(listId).ConfigureAwait(false);
+            ApiResponse<GetSizeResponse> response = await _listClient.GetSizeAsync(listId).ConfigureAwait(false);
 
             Assert.NotNull(response);
             Assert.NotNull(response.Model);
-            Assert.Equal("Success", response.Model.Code);
+            Assert.Equal(size, response.Model.Size);
             Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
             Assert.Equal(path, response.UrlPath);
 
-            MockRestClient.Verify(m => m.DeleteAsync<DeleteListResponse>(It.Is<string>(a => a == path)), Times.Once);
+            MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
         }
     }
 }
