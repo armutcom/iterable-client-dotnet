@@ -157,7 +157,7 @@ var userClient = serviceProvider.GetRequiredService<IUserClient>();
 The methods that end with Async returns model itself without additional HTTP response information.
 
 ```csharp
-UserModel userModel = await userClient.GetByEmailAsync("info@armut.com");
+var userModel = await userClient.GetByEmailAsync("info@armut.com");
 ```
 
 ### Samples
