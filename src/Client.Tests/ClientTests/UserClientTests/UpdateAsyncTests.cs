@@ -1,6 +1,6 @@
 ﻿using Armut.Iterable.Client.Contracts;
 using Armut.Iterable.Client.Core.Responses;
-using Armut.Iterable.Client.Models.BrowserModels;
+using Armut.Iterable.Client.Models.UserModels;
 using Armut.Iterable.Client.Tests.Base;
 using Moq;
 using System;
@@ -10,11 +10,11 @@ using Xunit;
 
 namespace Armut.Iterable.Client.Tests.ClientTests.UserClientTests
 {
-    public class RegisterBrowserTokenAsyncTests : BaseTestClass
+    public class UpdateAsyncTests : BaseTestClass
     {
         private readonly IUserClient _userClient;
 
-        public RegisterBrowserTokenAsyncTests()
+        public UpdateAsyncTests()
         {
             _userClient = new UserClient(MockRestClient.Object);
         }
@@ -22,30 +22,31 @@ namespace Armut.Iterable.Client.Tests.ClientTests.UserClientTests
         [Fact]
         public async Task Should_Throw_Should_Throw_ArgumentException_If_Path_Is_Null_Or_Empty()
         {
-            await Assert.ThrowsAsync<ArgumentNullException>(() => _userClient.RegisterBrowserTokenAsync(null)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _userClient.UpdateAsync(null)).ConfigureAwait(false);
         }
 
         [Fact]
-        public async Task Should_Register_Browser()
+        public async Task Should_Update_User()
         {
-            const string path = "/api/users/registerBrowserToken";
-            var request = new RegisterBrowserTokenRequest
+            string path = "/api/users/update";
+
+            var request = new UpdateUserRequest
             {
                 Email = "info@armut.com",
                 UserId = "info@armut.com"
             };
 
-            MockRestClient.Setup(m => m.PostAsync<RegisterBrowserTokenResponse>(It.Is<string>(a => a == path), It.IsAny<RegisterBrowserTokenRequest>())).ReturnsAsync(new ApiResponse<RegisterBrowserTokenResponse>
+            MockRestClient.Setup(m => m.PostAsync<UpdateUserResponse>(It.Is<string>(a => a == path), It.IsAny<UpdateUserRequest>())).ReturnsAsync(new ApiResponse<UpdateUserResponse>
             {
                 UrlPath = path,
                 HttpStatusCode = HttpStatusCode.OK,
-                Model = new RegisterBrowserTokenResponse
+                Model = new UpdateUserResponse
                 {
                     Code = "Success"
                 }
             });
 
-            ApiResponse<RegisterBrowserTokenResponse> response = await _userClient.RegisterBrowserTokenAsync(request).ConfigureAwait(false);
+            ApiResponse<UpdateUserResponse> response = await _userClient.UpdateAsync(request).ConfigureAwait(false);
 
             Assert.NotNull(response);
             Assert.NotNull(response.Model);
@@ -53,7 +54,7 @@ namespace Armut.Iterable.Client.Tests.ClientTests.UserClientTests
             Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
             Assert.Equal(path, response.UrlPath);
 
-            MockRestClient.Verify(m => m.PostAsync<RegisterBrowserTokenResponse>(It.Is<string>(a => a == path), It.IsAny<RegisterBrowserTokenRequest>()), Times.Once);
+            MockRestClient.Verify(m => m.PostAsync<UpdateUserResponse>(It.Is<string>(a => a == path), It.IsAny<UpdateUserRequest>()), Times.Once);
         }
     }
 }

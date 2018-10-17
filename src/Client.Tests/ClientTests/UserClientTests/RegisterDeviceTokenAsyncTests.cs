@@ -26,7 +26,7 @@ namespace Armut.Iterable.Client.Tests.ClientTests.UserClientTests
         }
 
         [Fact]
-        public async Task Should_Delete_User()
+        public async Task Should_Register_Device()
         {
             const string path = "/api/users/registerDeviceToken";
             var request = new RegisterDeviceTokenRequest
