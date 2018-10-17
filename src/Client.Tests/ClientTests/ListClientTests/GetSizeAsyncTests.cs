@@ -50,5 +50,94 @@ namespace Armut.Iterable.Client.Tests.ClientTests.ListClientTests
 
             MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
         }
+
+        [Fact]
+        public async Task Should_Not_Return_Size_When_HttpStatusCode_Is_BadRequest()
+        {
+            const int listId = 14;
+            string path = $"/api/lists/{listId}/size";
+
+            MockRestClient.Setup(m => m.GetContentAsync(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse
+            {
+                UrlPath = path,
+                HttpStatusCode = HttpStatusCode.BadRequest
+            });
+
+            ApiResponse<GetSizeResponse> response = await _listClient.GetSizeAsync(listId).ConfigureAwait(false);
+
+            Assert.NotNull(response);
+            Assert.Null(response.Model);
+            Assert.Equal(HttpStatusCode.BadRequest, response.HttpStatusCode);
+            Assert.Equal(path, response.UrlPath);
+
+            MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_Not_Return_Size_When_HttpStatusCode_Is_Unauthorized()
+        {
+            const int listId = 14;
+            string path = $"/api/lists/{listId}/size";
+
+            MockRestClient.Setup(m => m.GetContentAsync(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse
+            {
+                UrlPath = path,
+                HttpStatusCode = HttpStatusCode.Unauthorized
+            });
+
+            ApiResponse<GetSizeResponse> response = await _listClient.GetSizeAsync(listId).ConfigureAwait(false);
+
+            Assert.NotNull(response);
+            Assert.Null(response.Model);
+            Assert.Equal(HttpStatusCode.Unauthorized, response.HttpStatusCode);
+            Assert.Equal(path, response.UrlPath);
+
+            MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_Not_Return_Size_When_Content_Is_Null_Or_Empty()
+        {
+            const int listId = 14;
+            string path = $"/api/lists/{listId}/size";
+
+            MockRestClient.Setup(m => m.GetContentAsync(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse
+            {
+                UrlPath = path,
+                HttpStatusCode = HttpStatusCode.OK
+            });
+
+            ApiResponse<GetSizeResponse> response = await _listClient.GetSizeAsync(listId).ConfigureAwait(false);
+
+            Assert.NotNull(response);
+            Assert.Null(response.Model);
+            Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
+            Assert.Equal(path, response.UrlPath);
+
+            MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
+        }
+
+        [Fact]
+        public async Task Should_Not_Return_Size_When_Content_Is_Not_Integer()
+        {
+            const int listId = 14;
+            string path = $"/api/lists/{listId}/size";
+
+            MockRestClient.Setup(m => m.GetContentAsync(It.Is<string>(a => a == path))).ReturnsAsync(new ApiResponse
+            {
+                UrlPath = path,
+                HttpStatusCode = HttpStatusCode.OK,
+                Content = "test content"
+            });
+
+            ApiResponse<GetSizeResponse> response = await _listClient.GetSizeAsync(listId).ConfigureAwait(false);
+
+            Assert.NotNull(response);
+            Assert.Null(response.Model);
+            Assert.Equal(HttpStatusCode.OK, response.HttpStatusCode);
+            Assert.Equal(path, response.UrlPath);
+
+            MockRestClient.Verify(m => m.GetContentAsync(It.Is<string>(a => a == path)), Times.Once);
+        }
     }
 }
