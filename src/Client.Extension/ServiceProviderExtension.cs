@@ -14,7 +14,8 @@ namespace Armut.Iterable.Client.Extension
         {
             serviceCollection
                 .AddSingleton<IRestClient, RestClient>()
-                .AddTransient<IUserClient, UserClient>();
+                .AddTransient<IUserClient, UserClient>()
+                .AddTransient<IListClient, ListClient>();
         }
 
 #if NETSTANDARD2
@@ -27,7 +28,9 @@ namespace Armut.Iterable.Client.Extension
                     client.DefaultRequestHeaders.Add("Api-Key", apiKey);
                 });
 
-            serviceCollection.AddTransient<IUserClient, UserClient>();
+            serviceCollection
+                .AddTransient<IUserClient, UserClient>()
+                .AddTransient<IListClient, ListClient>();
         }
 #endif
     }

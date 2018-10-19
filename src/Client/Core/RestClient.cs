@@ -1,5 +1,6 @@
 using Armut.Iterable.Client.Contracts;
 using Armut.Iterable.Client.Core.Responses;
+using Armut.Iterable.Core;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -20,6 +21,24 @@ namespace Armut.Iterable.Client.Core
         public RestClient(HttpClient client)
         {
             _client = client;
+        }
+
+        public async Task<ApiResponse> GetContentAsync(string path)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+
+            HttpResponseMessage httpResponseMessage = await _client.GetAsync(path).ConfigureAwait(false);
+            string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            var apiResponse = new ApiResponse
+            {
+                HttpStatusCode = httpResponseMessage.StatusCode,
+                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                UrlPath = path,
+                Content = content
+            };
+
+            return apiResponse;
         }
 
         public async Task<ApiResponse<T>> GetAsync<T>(string path) where T : class, new()
@@ -43,6 +62,7 @@ namespace Armut.Iterable.Client.Core
         public async Task<ApiResponse<T>> PostAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             HttpRequestMessage requestMessage = new HttpRequestMessage
             {
@@ -92,6 +112,7 @@ namespace Armut.Iterable.Client.Core
         public async Task<ApiResponse<T>> DeleteAsync<T>(string path, object request) where T : class, new()
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
+            Ensure.ArgumentNotNull(request, nameof(request));
 
             HttpRequestMessage requestMessage = new HttpRequestMessage
             {

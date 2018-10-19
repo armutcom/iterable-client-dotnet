@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http;
 
-namespace Armut.Iterable.Client
+namespace Armut.Iterable.Core
 {
     internal static class Serializer
     {     

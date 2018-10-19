@@ -5,6 +5,8 @@ namespace Armut.Iterable.Client.Contracts
 {
     public interface IRestClient
     {
+        Task<ApiResponse> GetContentAsync(string path);
+
         Task<ApiResponse<T>> GetAsync<T>(string path) where T : class, new();
 
         Task<ApiResponse<T>> PostAsync<T>(string path, object request) where T : class, new();
