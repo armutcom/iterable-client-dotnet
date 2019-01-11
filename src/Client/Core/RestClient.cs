@@ -58,10 +58,10 @@ namespace Armut.Iterable.Client.Core
 
             if (apiResponse.HttpStatusCode != HttpStatusCode.BadRequest
                 && apiResponse.HttpStatusCode != HttpStatusCode.Unauthorized
-                && !string.IsNullOrEmpty(apiResponse.Content)
-                && !apiResponse.Headers["Content-Type"].Contains("text/plain"))
+                && !string.IsNullOrEmpty(content)
+                && apiResponse.Headers["Content-Type"].Equals("application/json"))
             {
-                apiResponse.Model = JsonConvert.DeserializeObject<T>(apiResponse.Content);
+                apiResponse.Model = JsonConvert.DeserializeObject<T>(content);
             }
             else
             {

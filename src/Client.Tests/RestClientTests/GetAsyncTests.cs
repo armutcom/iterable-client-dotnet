@@ -3,9 +3,12 @@ using Armut.Iterable.Client.Core.Responses;
 using Armut.Iterable.Client.Models.UserModels;
 using Armut.Iterable.Client.Tests.Base;
 using Moq;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,29 +26,55 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
         }
 
         [Fact]
-        public async Task Should_Return_UpdateUserResponse()
+        public async Task Should_Return_RetrieveUserResponse()
         {
-            const string path = "/api/users/update";
-            const string content = "{\"msg\": \"test message\",\"code\": \"Success\"}";
+            const string userId = "info@armut.com";
+            string path = $"/api/users/byUserId/{userId}";
+
+            string content = string.Empty;
 
             IRestClient _restClient = CreateRestClient(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(content)
+                Content = new JsonContent(content)
             });
 
-            ApiResponse<UpdateUserResponse> apiResponse = await _restClient.GetAsync<UpdateUserResponse>(path).ConfigureAwait(false);
+            ApiResponse<RetrieveUserResponse> apiResponse = await _restClient.GetAsync<RetrieveUserResponse>(path).ConfigureAwait(false);
 
             Assert.NotNull(apiResponse);
             Assert.Equal(HttpStatusCode.OK, apiResponse.HttpStatusCode);
             Assert.Equal(path, apiResponse.UrlPath);
-            Assert.Equal(0, apiResponse.Headers.Count);
-            Assert.NotNull(apiResponse.Model);
-            Assert.IsType<UpdateUserResponse>(apiResponse.Model);
-            Assert.Equal("test message", apiResponse.Model.Msg);
-            Assert.Equal("Success", apiResponse.Model.Code);
+            Assert.NotNull(apiResponse.Headers);
+            Assert.Equal(2, apiResponse.Headers.Count);
+            Assert.Null(apiResponse.Model);
 
             VerifyRestClient(Times.Once(), HttpMethod.Get, path);
+        }
+    }
+
+    public class JsonContent : HttpContent
+    {
+        private readonly MemoryStream _stream = new MemoryStream();
+
+        public JsonContent(string content)
+        {
+            Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var jw = new JsonTextWriter(new StreamWriter(_stream));
+            var serializer = new JsonSerializer();
+            serializer.Serialize(jw, content);
+            jw.Flush();
+            _stream.Position = 0;
+        }
+
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        {
+            return _stream.CopyToAsync(stream);
+        }
+
+        protected override bool TryComputeLength(out long length)
+        {
+            length = _stream.Length;
+            return true;
         }
     }
 }
