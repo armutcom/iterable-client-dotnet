@@ -15,7 +15,8 @@ namespace Armut.Iterable.Client.Extension
             serviceCollection
                 .AddSingleton<IRestClient, RestClient>()
                 .AddTransient<IUserClient, UserClient>()
-                .AddTransient<IListClient, ListClient>();
+                .AddTransient<IListClient, ListClient>()
+                .AddTransient<IEventClient, EventClient>();
         }
 
 #if NETSTANDARD2
@@ -30,7 +31,8 @@ namespace Armut.Iterable.Client.Extension
 
             serviceCollection
                 .AddTransient<IUserClient, UserClient>()
-                .AddTransient<IListClient, ListClient>();
+                .AddTransient<IListClient, ListClient>()
+                .AddTransient<IEventClient, EventClient>();
         }
 #endif
     }
