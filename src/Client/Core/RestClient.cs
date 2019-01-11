@@ -4,6 +4,7 @@ using Armut.Iterable.Core;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -52,9 +53,21 @@ namespace Armut.Iterable.Client.Core
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
                 Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
-                UrlPath = path,
-                Model = JsonConvert.DeserializeObject<T>(content)
+                UrlPath = path
             };
+
+            if (apiResponse.HttpStatusCode != HttpStatusCode.BadRequest
+                && apiResponse.HttpStatusCode != HttpStatusCode.Unauthorized
+                && !string.IsNullOrEmpty(apiResponse.Content)
+                && !apiResponse.Headers["Content-Type"].Contains("text/plain"))
+            {
+                apiResponse.Model = JsonConvert.DeserializeObject<T>(apiResponse.Content);
+            }
+            else
+            {
+                apiResponse.Error = true;
+                apiResponse.Content = content;
+            }
 
             return apiResponse;
         }
