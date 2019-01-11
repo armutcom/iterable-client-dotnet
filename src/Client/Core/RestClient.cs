@@ -33,7 +33,7 @@ namespace Armut.Iterable.Client.Core
             var apiResponse = new ApiResponse
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
-                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
                 UrlPath = path,
                 Content = content
             };
@@ -51,7 +51,7 @@ namespace Armut.Iterable.Client.Core
             var apiResponse = new ApiResponse<T>
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
-                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
                 UrlPath = path,
                 Model = JsonConvert.DeserializeObject<T>(content)
             };
@@ -77,7 +77,7 @@ namespace Armut.Iterable.Client.Core
             var apiResponse = new ApiResponse<T>
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
-                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
                 UrlPath = path,
                 Model = JsonConvert.DeserializeObject<T>(content)
             };
@@ -101,7 +101,7 @@ namespace Armut.Iterable.Client.Core
             var apiResponse = new ApiResponse<T>
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
-                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
                 UrlPath = path,
                 Model = JsonConvert.DeserializeObject<T>(content)
             };
@@ -127,7 +127,7 @@ namespace Armut.Iterable.Client.Core
             var apiResponse = new ApiResponse<T>
             {
                 HttpStatusCode = httpResponseMessage.StatusCode,
-                Headers = httpResponseMessage.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
+                Headers = httpResponseMessage.Content.Headers.ToDictionary(pair => pair.Key, pair => pair.Value.First()),
                 UrlPath = path,
                 Model = JsonConvert.DeserializeObject<T>(content)
             };
