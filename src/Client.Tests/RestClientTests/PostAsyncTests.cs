@@ -54,7 +54,8 @@ namespace Armut.Iterable.Client.Tests.RestClientTests
             Assert.NotNull(apiResponse);
             Assert.Equal(HttpStatusCode.OK, apiResponse.HttpStatusCode);
             Assert.Equal(path, apiResponse.UrlPath);
-            Assert.Equal(0, apiResponse.Headers.Count);
+            Assert.NotNull(apiResponse.Headers);
+            Assert.Equal(1, apiResponse.Headers.Count);
             Assert.NotNull(apiResponse.Model);
             Assert.IsType<UpdateUserResponse>(apiResponse.Model);
             Assert.Equal("test message", apiResponse.Model.Msg);
