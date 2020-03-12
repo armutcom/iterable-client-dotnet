@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using Armut.Iterable.Client.Models.UserModels;
 using Newtonsoft.Json;
 
@@ -6,13 +7,15 @@ namespace Armut.Iterable.Client.Models.CommerceModels
 {
     public class TrackPurchaseRequest
     {
-        [JsonProperty("id")]
+        public TrackPurchaseRequest()
+        {
+            this.User = new UpdateUserRequest();
+        }
+
         public string Id { get; set; }
 
-        [JsonProperty("user")]
         public UpdateUserRequest User { get; set; }
 
-        [JsonProperty("items")]
         public List<CommerceItem> Items { get; set; }
 
         [JsonProperty("campaignId")]
@@ -25,7 +28,7 @@ namespace Armut.Iterable.Client.Models.CommerceModels
         public int CreatedAt { get; set; }
 
         [JsonProperty("dataFields")]
-        public dynamic DataFields { get; set; }
+        public dynamic DataFields { get; set; } = new ExpandoObject();
 
         [JsonProperty("total")]
         public int Total { get; set; }

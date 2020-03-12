@@ -11,6 +11,6 @@ namespace Armut.Iterable.Client.Contracts
 {
     public interface ICommerceClient
     {
-        Task<ApiResponse<TrackPurchaseResponse>> TrackAsync(TrackPurchaseRequest model);
+        Task<ApiResponse<TrackPurchaseResponse>> TrackPurchaseAsync(TrackPurchaseRequest model);
     }
 }

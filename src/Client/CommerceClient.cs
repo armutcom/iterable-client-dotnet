@@ -14,7 +14,7 @@ namespace Armut.Iterable.Client
         {
             _restClient = restClient;
         }
-        public async Task<ApiResponse<TrackPurchaseResponse>> TrackAsync(TrackPurchaseRequest model)
+        public async Task<ApiResponse<TrackPurchaseResponse>> TrackPurchaseAsync(TrackPurchaseRequest model)
         {
             Ensure.ArgumentNotNull(model, nameof(model));
 

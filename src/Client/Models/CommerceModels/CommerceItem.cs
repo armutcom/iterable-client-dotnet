@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +25,9 @@ namespace Armut.Iterable.Client.Models.CommerceModels
 
         public string Url { get; set; }
 
-        public dynamic DataFields { get; set; }
+        public dynamic DataFields { get; set; } = new ExpandoObject();
 
-        public string[] Categories { get; set; }
+        public List<string> Categories { get; set; }
 
         public float Price { get; set; }
 
