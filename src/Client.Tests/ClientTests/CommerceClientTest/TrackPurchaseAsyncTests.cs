@@ -65,7 +65,5 @@ namespace Armut.Iterable.Client.Tests.ClientTests.CommerceClientTest
 
             MockRestClient.Verify(m => m.PostAsync<TrackPurchaseResponse>(It.Is<string>(a => a == path), It.IsAny<TrackPurchaseRequest>()), Times.Once);
         }
-
-
     }
 }
