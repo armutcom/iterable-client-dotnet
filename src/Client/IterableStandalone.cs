@@ -34,5 +34,15 @@ namespace Armut.Iterable.Client
         {
             return new ListClient(_restClient);
         }
+
+        public CommerceClient CreateCommerceClient()
+        {
+            return new CommerceClient(_restClient);
+        }
+
+        public EventClient CreateEventClient()
+        {
+            return new EventClient(_restClient);
+        }
     }
 }
